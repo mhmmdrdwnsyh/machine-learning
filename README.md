@@ -11,10 +11,10 @@ All file will upadate every week also the final project too of machine learning
 # Recommendation System with Tensorflow
 # Deploy Your Model with Tensorflow.js
 
-# for the detail i'll give the youtube links below:
-# Pre-Requisite
+for the detail i'll give the youtube links below:
+Pre-Requisite
 https://youtu.be/P4kaG_IQCb4
-#Weekly-Class
+Weekly-Class
 https://youtu.be/EoDFxSsbnBg
 
 # Datasets
