@@ -1,0 +1,72 @@
+import pandas as pd
+member = pd.read_csv('open_member_500.csv')
+
+member.head()
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 10))
+plt.xticks(rotation=90)
+plt.title('Fakultas Member GDSC 2021', fontsize=20)
+ax = sns.countplot(member['Fakultas'])
+
+kampus_lain = member[member['Asal kampus']!='Universitas Gunadarma']
+
+plt.figure(figsize=(10, 10))
+plt.xticks(rotation=90)
+plt.title('Asal Kampus Member GDSC 2021', fontsize=20)
+ax = sns.countplot(kampus_lain['Asal kampus'])
+
+member.head()
+def get_angkatan(kelas):
+    angkatan = kelas[0]
+    return angkatan
+
+member['Angkatan'] = member['Kelas'].apply(get_angkatan)
+member.head()
+
+plt.figure(figsize=(10, 10))
+plt.title('Angkatan GDSC 2021', fontsize=20)
+ax = sns.countplot(member['Angkatan'])
+
+member = member.dropna(axis=0)
+words = ' '.join(member['Apa minat kamu?'])
+print(words)
+
+!pip install pysastrawi
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+
+factory = StopWordRemoverFactory()
+stopword = factory.create_stop_word_remover()
+stopword.remove('Halo ini saya manfred, hala madrid!')
+
+words = stopword.remove(words)
+
+from wordcloud import WordCloud
+wordcloud = WordCloud().generate(words)
+plt.imshow(wordcloud)
+plt.title('Minat & Passion Member')
+plt.axis(False)
+plt.show()
+# download logo dsc
+!gdown --id 1jZVNRRWTI3Vu8XiMtuQXvYuFZj-anztj
+
+from PIL import Image
+
+
+EVENT_NAME = 'Member GDSC 2021'
+LOGO_MASK = np.array(Image.open('dsc_mask.png'))
+
+def make_word_cloud(series, use_mask=False, event_name=EVENT_NAME, logo_mask=LOGO_MASK):
+    words = ' '.join(series)
+    words = stopword.remove(words)
+    wordcloud = WordCloud(background_color='black', mask=logo_mask, random_state=42,  width=3000, height=2000, colormap='Set3').generate(words)
+    
+    plt.figure(figsize=(15, 10))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.tight_layout(pad=0)
+    plt.axis("off")
+    plt.title(series.name, fontsize='20')
+    plt.savefig(f"{event_name}: {series.name}"+".png", bbox_inches='tight');
+    
+make_word_cloud(member['Apa minat kamu?'], use_mask=True)
