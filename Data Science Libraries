@@ -1,0 +1,20 @@
+import pandas as pd
+member = pd.read_csv('open_member_500.csv')
+
+member.head()
+member['Jurusan']
+member[['Jurusan', 'Apa minat kamu?']]
+
+for i, row in member.iterrows():
+    print(row['Apa minat kamu?'])
+member.head()
+si = member[member['Jurusan']=='Sistem Informasi']
+si.head()
+for i, row in si.iterrows():
+    print(row['Apa minat kamu?'])
+member.head()
+member.info()
+member = member.dropna(axis=0)
+minat = member[member['Apa minat kamu?'].str.contains('artificial', case=False)]  
+for i, row in minat.iterrows():
+    print(row['Apa minat kamu?'])
